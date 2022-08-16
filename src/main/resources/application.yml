@@ -1,0 +1,38 @@
+
+
+server:
+  port: 8080
+
+spring:
+  #mysql???????
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&tinyInt1isBit=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    #??sql??
+    show-sql: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 50
+        max-wait: 3000
+        max-idle: 20
+        min-idle: 2
+    timeout: 5000
+
+oss:
+  appName: test_demo
+  appSecret: 929b1659de634d3384edeb8692e19573
+  appToken: 85b0e3ef2bdb4ce5975da90184e2edb6
+
+
+
+
+
+
