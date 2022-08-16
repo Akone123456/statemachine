@@ -10,7 +10,6 @@ import javax.persistence.Entity;
  * @date 2022/8/16 14:52
  */
 @Data
-@Entity
 public class Order {
     private Long id;
     private OrderStates states;

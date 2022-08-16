@@ -1,5 +1,6 @@
 package com.fscut.commonstatemachine;
 
+import com.fscut.commonstatemachine.Build.OrderStateMachineBuilder;
 import com.fscut.commonstatemachine.Enum.OrderEvents;
 import com.fscut.commonstatemachine.Enum.OrderStates;
 
@@ -68,5 +69,33 @@ class CommonStateMachineApplicationTests {
         Message<OrderEvents> message = MessageBuilder.withPayload(OrderEvents.PAY).setHeader("order",order).build();
         orderSingleMachine.start();
         orderSingleMachine.sendEvent(message);
+    }
+
+    @Autowired
+    private OrderStateMachineBuilder orderStateMachineBuilder;
+    @Test
+    public void test04() throws Exception {
+
+        StateMachine<OrderStates, OrderEvents> stateMachine = orderStateMachineBuilder.build(beanFactory);
+        System.out.println(stateMachine.getId());
+
+        // 创建流程
+        stateMachine.start();
+
+        // 触发PAY事件
+        stateMachine.sendEvent(OrderEvents.PAY);
+
+        // 触发RECEIVE事件
+        //stateMachine.sendEvent(OrderEvents.RECEIVE);
+
+        //用message传递数据
+        Order order = new Order();
+        order.setId(1L);
+        order.setName("张三");
+        Message<OrderEvents> message = MessageBuilder.withPayload(OrderEvents.RECEIVE).setHeader("order", order).setHeader("otherObj", "otherObjValue").build();
+        stateMachine.sendEvent(message);
+
+        // 获取最终状态
+        System.out.println("最终状态：" + stateMachine.getState().getId());
     }
 }
